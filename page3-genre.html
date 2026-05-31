@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name That Genre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:       #1B3A6B;
+      --teal:       #1B5E7B;
+      --light-blue: #D6E8F0;
+      --orange:     #E87722;
+      --white:      #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--navy);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ───────────────────────────────── */
+    .site-header {
+      padding: 36px 28px 22px;
+      text-align: center;
+      position: relative;
+    }
+
+    .site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(214,232,240,0.15) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+    }
+
+    .wordmark {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--light-blue);
+      opacity: 0.7;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .page-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      position: relative;
+    }
+
+    /* ── Card ─────────────────────────────────── */
+    .card {
+      background: var(--white);
+      flex: 1;
+      border-radius: 18px 18px 0 0;
+      padding: 34px 26px 48px;
+      margin-top: 18px;
+    }
+
+    /* ── Form state ───────────────────────────── */
+    .task-block {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.45;
+      padding: 18px 18px 18px 22px;
+      border-left: 5px solid var(--orange);
+      background: #f3f8fc;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 24px;
+    }
+
+    .proposal {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 26px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    /* ── Options ──────────────────────────────── */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 2px solid var(--light-blue);
+      border-radius: 10px;
+      background: #f3f8fc;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .option:hover {
+      border-color: var(--teal);
+    }
+
+    .option.selected {
+      border-color: var(--orange);
+      background: #fff7f2;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--light-blue);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .option.selected .option-letter {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    .option-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--navy);
+    }
+
+    .error-text {
+      font-size: 14px;
+      color: #c0392b;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .error-text.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 17px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      -webkit-appearance: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+      background: #c96515;
+    }
+
+    /* ── Confirmation state ───────────────────── */
+    .confirmation {
+      display: none;
+      animation: fadeUp 0.35s ease both;
+    }
+
+    .confirmation.show { display: block; }
+    .form-view.hide    { display: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .check-wrap {
+      width: 54px;
+      height: 54px;
+      background: #e8f5e9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .answer-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 5px;
+    }
+
+    .answer-value {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 34px;
+      line-height: 1.2;
+    }
+
+    .clue-box {
+      background: var(--navy);
+      border-radius: 14px;
+      padding: 26px 24px 22px;
+    }
+
+    .clue-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .clue-text {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 27px;
+      color: var(--white);
+      line-height: 1.55;
+    }
+
+    .clue-footer {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--light-blue);
+      opacity: 0.75;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <p class="wordmark">International Journal for Students as Partners</p>
+    <h1 class="page-title">Name That Genre</h1>
+    <span class="badge">Activity 3 of 3</span>
+  </header>
+
+  <main class="card">
+
+    <!-- ── FORM ── -->
+    <div class="form-view" id="formView">
+
+      <p class="task-block">Which IJSaP genre best fits this proposal?</p>
+
+      <p class="proposal">
+        A physiotherapy faculty member and her student partner at a regional Australian
+        university worked together to redesign the clinical placement briefing process after
+        students raised concerns about feeling underprepared. This paper examines how the
+        partnership was structured, the changes that resulted, and what both partners learned
+        about navigating the power dynamics of clinical education.
+      </p>
+
+      <span class="field-label">Select one</span>
+
+      <div class="options" role="radiogroup" aria-label="Genre options">
+        <div class="option" data-value="A. Research article" role="radio" aria-checked="false" tabindex="0">
+          <span class="option-letter">A</span>
+          <span class="option-text">Research article</span>
+        </div>
+        <div class="option" data-value="B. Case study" role="radio" aria-checked="false" tabindex="0">
+          <span class="option-letter">B</span>
+          <span class="option-text">Case study</span>
+        </div>
+        <div class="option" data-value="C. Reflective essay" role="radio" aria-checked="false" tabindex="0">
+          <span class="option-letter">C</span>
+          <span class="option-text">Reflective essay</span>
+        </div>
+        <div class="option" data-value="D. Not for IJSaP" role="radio" aria-checked="false" tabindex="0">
+          <span class="option-letter">D</span>
+          <span class="option-text">Not for IJSaP</span>
+        </div>
+      </div>
+
+      <p class="error-text" id="errorText" role="alert">Please select an answer to continue.</p>
+      <button class="submit-btn" id="submitBtn">Submit</button>
+    </div>
+
+    <!-- ── CONFIRMATION ── -->
+    <div class="confirmation" id="confirmation" aria-live="polite">
+      <div class="check-wrap" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
+             stroke="#2e7d32" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <p class="answer-label">Your answer</p>
+      <p class="answer-value" id="answerValue"></p>
+
+      <div class="clue-box">
+        <p class="clue-eyebrow">The third clue is:</p>
+        <p class="clue-text">A prefix that tells you to do it again.</p>
+        <p class="clue-footer">Write this down — you'll need it for the meta puzzle.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const options  = document.querySelectorAll('.option');
+    const errText  = document.getElementById('errorText');
+    const btn      = document.getElementById('submitBtn');
+    const formView = document.getElementById('formView');
+    const conf     = document.getElementById('confirmation');
+    const ansVal   = document.getElementById('answerValue');
+
+    let selected = null;
+
+    options.forEach(opt => {
+      function select() {
+        options.forEach(o => {
+          o.classList.remove('selected');
+          o.setAttribute('aria-checked', 'false');
+        });
+        opt.classList.add('selected');
+        opt.setAttribute('aria-checked', 'true');
+        selected = opt.dataset.value;
+        errText.classList.remove('show');
+      }
+      opt.addEventListener('click', select);
+      opt.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
+      });
+    });
+
+    btn.addEventListener('click', () => {
+      if (!selected) {
+        errText.textContent = 'Please select an answer to continue.';
+        errText.classList.add('show');
+        return;
+      }
+      if (selected !== 'B. Case study') {
+        errText.textContent = 'Not quite — take another look at the proposal and try again.';
+        errText.classList.add('show');
+        return;
+      }
+      ansVal.textContent = selected;
+      formView.classList.add('hide');
+      conf.classList.add('show');
+    });
+  </script>
+
+</body>
+</html>
