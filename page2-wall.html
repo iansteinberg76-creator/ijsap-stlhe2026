@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partnership Wall</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:       #1B3A6B;
+      --teal:       #1B5E7B;
+      --light-blue: #D6E8F0;
+      --orange:     #E87722;
+      --white:      #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--navy);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header {
+      padding: 36px 28px 22px;
+      text-align: center;
+      position: relative;
+    }
+
+    .site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(214,232,240,0.15) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+    }
+
+    .wordmark {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--light-blue);
+      opacity: 0.7;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .page-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      position: relative;
+    }
+
+    .card {
+      background: var(--white);
+      flex: 1;
+      border-radius: 18px 18px 0 0;
+      padding: 34px 26px 48px;
+      margin-top: 18px;
+    }
+
+    .intro {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #555;
+      margin-bottom: 28px;
+    }
+
+    .clue-box {
+      background: var(--navy);
+      border-radius: 14px;
+      padding: 26px 24px 22px;
+      margin-bottom: 28px;
+    }
+
+    .clue-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .clue-text {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 27px;
+      color: var(--white);
+      line-height: 1.55;
+    }
+
+    .clue-footer {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--light-blue);
+      opacity: 0.75;
+      line-height: 1.5;
+    }
+
+    .menti-btn {
+      display: block;
+      width: 100%;
+      padding: 17px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border-radius: 10px;
+      text-decoration: none;
+      text-align: center;
+      box-sizing: border-box;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .menti-btn:active {
+      transform: scale(0.98);
+      background: #c96515;
+    }
+
+    .menti-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #999;
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <p class="wordmark">International Journal for Students as Partners</p>
+    <h1 class="page-title">Partnership Wall</h1>
+    <span class="badge">Activity 2 of 3</span>
+  </header>
+
+  <main class="card">
+    <p class="intro">Collect your clue, then add your voice to our live Partnership Wall.</p>
+
+    <div class="clue-box">
+      <p class="clue-eyebrow">The second clue is:</p>
+      <p class="clue-text">Nickname for Hamilton's local newspaper.</p>
+      <p class="clue-footer">Write this down — you'll need it for the meta puzzle.</p>
+    </div>
+
+    <a class="menti-btn" href="https://www.menti.com/algsnucfrak4" target="_blank" rel="noopener">
+      Click here to add your response
+    </a>
+    <p class="menti-note">What does partnership mean to you?</p>
+  </main>
+
+</body>
+</html>
